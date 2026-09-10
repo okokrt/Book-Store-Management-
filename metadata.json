@@ -1,0 +1,6 @@
+{
+  "name": "Kashi Walla Book Management",
+  "description": "Bookstore stock management and sales-recording software for Kashi Walla Book Store.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

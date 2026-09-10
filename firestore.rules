@@ -1,0 +1,10 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    // All data access is mediated through the secure server API layer (Firebase Admin SDK).
+    // Direct client-side browser access is completely disallowed to prevent tampering.
+    match /{document=**} {
+      allow read, write: if false;
+    }
+  }
+}

@@ -1,0 +1,114 @@
+{
+  "$schema": "https://raw.githubusercontent.com/firebase/firebase-tools/master/schema/firestore-blueprint.json",
+  "entities": {
+    "books": {
+      "title": "Book",
+      "description": "Inventory books with stock count",
+      "type": "object",
+      "properties": {
+        "name": { "type": "string" },
+        "code": { "type": "string" },
+        "author": { "type": "string" },
+        "publisher": { "type": "string" },
+        "price": { "type": "number", "minimum": 0 },
+        "stock": { "type": "integer", "minimum": 0 },
+        "createdAt": { "type": "string" },
+        "updatedAt": { "type": "string" }
+      },
+      "required": ["name", "stock", "createdAt", "updatedAt"]
+    },
+    "courses": {
+      "title": "Course",
+      "description": "Book bundles with required book quantities",
+      "type": "object",
+      "properties": {
+        "name": { "type": "string" },
+        "code": { "type": "string" },
+        "price": { "type": "number", "minimum": 0 },
+        "stock": { "type": "integer", "minimum": 0 },
+        "items": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "bookId": { "type": "string" },
+              "bookName": { "type": "string" },
+              "quantityRequired": { "type": "integer", "minimum": 1 }
+            },
+            "required": ["bookId", "bookName", "quantityRequired"]
+          }
+        },
+        "createdAt": { "type": "string" },
+        "updatedAt": { "type": "string" }
+      },
+      "required": ["name", "items", "createdAt", "updatedAt"]
+    },
+    "sales": {
+      "title": "Sale",
+      "description": "Recorded sales for books, courses, or multiple items cart",
+      "type": "object",
+      "properties": {
+        "saleNumber": { "type": "integer" },
+        "saleType": { "type": "string", "enum": ["Book", "Course", "Multiple"] },
+        "itemId": { "type": "string" },
+        "itemNameSnapshot": { "type": "string" },
+        "quantity": { "type": "integer", "minimum": 1 },
+        "unitPrice": { "type": "number", "minimum": 0 },
+        "totalPrice": { "type": "number", "minimum": 0 },
+        "currency": { "type": "string" },
+        "notes": { "type": "string" },
+        "items": { "type": "array" },
+        "deductedBooks": { "type": "array" },
+        "userId": { "type": "string" },
+        "userName": { "type": "string" },
+        "userRole": { "type": "string" },
+        "createdAt": { "type": "string" }
+      },
+      "required": ["saleNumber", "saleType", "itemNameSnapshot", "quantity", "userId", "userName", "createdAt"]
+    },
+    "inventoryTransactions": {
+      "title": "InventoryTransaction",
+      "description": "Audit trail for stock additions, sales, and adjustments",
+      "type": "object",
+      "properties": {
+        "bookId": { "type": "string" },
+        "bookName": { "type": "string" },
+        "type": { "type": "string" },
+        "quantity": { "type": "integer" },
+        "previousStock": { "type": "integer" },
+        "newStock": { "type": "integer" },
+        "referenceType": { "type": "string" },
+        "referenceId": { "type": "string" },
+        "userId": { "type": "string" },
+        "userName": { "type": "string" },
+        "notes": { "type": "string" },
+        "createdAt": { "type": "string" }
+      },
+      "required": ["bookId", "bookName", "type", "quantity", "previousStock", "newStock", "createdAt"]
+    },
+    "storeSettings": {
+      "title": "StoreSettings",
+      "description": "Store configuration and preferences",
+      "type": "object",
+      "properties": {
+        "storeName": { "type": "string" },
+        "storePhone": { "type": "string" },
+        "storeAddress": { "type": "string" },
+        "storeEmail": { "type": "string" },
+        "updatedAt": { "type": "string" }
+      }
+    },
+    "appUsers": {
+      "title": "AppUser",
+      "description": "Store staff and owners",
+      "type": "object",
+      "properties": {
+        "name": { "type": "string" },
+        "username": { "type": "string" },
+        "role": { "type": "string", "enum": ["OWNER", "STAFF"] },
+        "createdAt": { "type": "string" }
+      },
+      "required": ["name", "username", "role", "createdAt"]
+    }
+  }
+}
